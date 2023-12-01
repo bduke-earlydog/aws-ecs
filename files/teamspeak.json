@@ -1,0 +1,68 @@
+[
+    {
+        "name": "Teamspeak",
+        "image": "public.ecr.aws/docker/library/teamspeak:latest",
+        "cpu": 1024,
+        "memoryReservation": 307,
+        "portMappings": [
+            {
+                "containerPort": 9987,
+                "hostPort": 9987,
+                "protocol": "udp"
+            },
+            {
+                "name": "teamspeak-10011-tcp",
+                "containerPort": 10011,
+                "hostPort": 10011,
+                "protocol": "tcp"
+            },
+            {
+                "name": "teamspeak-10022-tcp",
+                "containerPort": 10022,
+                "hostPort": 10022,
+                "protocol": "tcp"
+            },
+            {
+                "name": "teamspeak-30033-tcp",
+                "containerPort": 30033,
+                "hostPort": 30033,
+                "protocol": "tcp"
+            },
+            {
+                "name": "teamspeak-10080-tcp",
+                "containerPort": 10080,
+                "hostPort": 10080,
+                "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "environment": [
+            {
+                "name": "TS3SERVER_QUERY_PROTOCOLS",
+                "value": "raw,http"
+            },
+            {
+                "name": "TS3SERVER_LICENSE",
+                "value": "accept"
+            }
+        ],
+        "mountPoints": [
+            {
+                "sourceVolume": "TeamspeakData",
+                "containerPath": "/var/ts3server",
+                "readOnly": false
+            }
+        ],
+        "volumesFrom": [],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "/ecs/Teamspeak",
+                "awslogs-region": "us-east-2",
+                "awslogs-stream-prefix": "ecs"
+            },
+            "secretOptions": []
+        }
+    }
+]
